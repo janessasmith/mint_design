@@ -1,0 +1,25 @@
+extends ../template
+
+block currentpage
+	- var currentPage = index
+
+block content
+	.container
+		button.btn-hamburger(type='button'): span Nav
+		include ../base/sidebar
+		include ../base/main
+
+block jsinfooter
+	script.
+		//copy name
+		document.querySelector('.media_title').textContent = document.querySelector('.name').textContent;
+		// offset footer
+		if (document.body.clientWidth >= 1024) {
+			var footerHeight = document.querySelector('.footer').offsetHeight;
+			document.querySelector('.interests').style.marginBottom = ((footerHeight+35)/16)+'rem';
+		}
+		//btn hamburger
+		document.querySelector('.btn-hamburger').onclick = function() {
+			document.querySelector('.sidebar').classList.toggle('open');
+			document.querySelector('body').classList.toggle('noscroll');
+		}

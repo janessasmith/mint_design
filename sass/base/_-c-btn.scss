@@ -1,0 +1,53 @@
+// btn reset placeholder
+%btn{
+    display: inline-block;
+    position: relative;
+    margin: 0;
+    padding: 0;
+    border: none;
+    text-align: center;
+    cursor: pointer;
+    text-decoration: none;
+    outline: none;
+}
+
+
+// button.btn-nav-open(type='button'): span Nav
+.btn-hamburger {
+	@extend %btn;
+	position: fixed;
+	top: 1rem;
+	right: 1rem;
+	z-index: 3;
+	background: #fff;
+	text-indent: -9000px;
+	font-size: 0.4rem;
+	width: 7em;
+	height: 7em;
+	outline: none;
+	opacity: .8;
+
+	@include bp($md) {
+		display: none;
+	}
+
+	& span{
+		position: absolute;
+		top: 1em; left: 50%;
+		transform: translate(-50%, 0);
+		width: 5.5em;
+		height: 1em;
+		background: $sidebar-bg;
+		&:before, &:after{
+			content: '';
+			display: block;
+			position: absolute;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background: $sidebar-bg;
+		}
+		&:before {top: 2em;}
+		&:after {top: 4em;}
+	}
+}

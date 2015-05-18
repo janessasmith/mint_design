@@ -1,0 +1,21 @@
+{
+  "name": "bp",
+  "version": "0.0.1",
+  "authors": [
+    "rosivanov <ros.g6w@gmail.com>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "jeet.gs": "~6.1.2",
+    "breakpoint-sass": "~2.5.0",
+    "hint.css": "~1.3.4"
+  }
+}

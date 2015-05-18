@@ -1,0 +1,54 @@
+include mixins
+include config
+
+//- Get Current Page
+//- comes from page file
+block currentpage
+
+
+doctype html
+html(class='no-js', lang= lang)&attributes( index.og.showOG ? {prefix: index.og.prefix} : '' )
+	head
+		meta(charset="UTF-8")
+		meta(http-equiv="X-UA-Compatible", content="IE=edge")
+		meta(name="viewport", content="width=device-width, initial-scale=1")
+
+		// Title
+		block title
+			title= currentPage.title
+
+		// Favicon
+		block favicon
+			if (favicon.showFavicon)
+				+favicon(favicon.path)
+
+		// SEO
+		block seo
+			+seo(currentPage.description, currentPage.keywords)
+
+		// OG
+		block og
+			if (currentPage.og.showOG)
+				+og(
+				currentPage.og.type,
+				currentPage.og.title,
+				currentPage.og.description,
+				currentPage.og.url,
+				currentPage.og.image,
+				currentPage.og.locale)
+
+		// Styles
+		block styles
+			link(rel="stylesheet", href="css/style.css")
+
+		// js In Head
+		block jsinhead
+			script(src='js/modernizr.js', async)
+
+	body
+		+browserhappy(lang)
+
+		block content
+
+		// js In Footer
+		block jsinfooter

@@ -1,0 +1,422 @@
+.noscroll {
+	overflow: hidden; // just in case; if pos:fix invokes scroll when overflows
+}
+
+.container {
+	@extend %cf;
+
+	@include bp($md) {
+		display: flex; // equal-height cols
+	}
+}
+
+.sidebar {
+	@extend %cf;
+	background: $sidebar-bg;
+	padding: 0 1rem;
+
+	position: fixed;
+	top: 0;	left: 0; right: 0;	bottom: 0;
+	z-index: 2;
+	overflow: auto;
+	transition: transform 1s ease;
+	transform: translate(-100%, 0);
+
+	&.open {
+		transform: translate(0, 0);
+	}
+
+	@include bp($md) {
+		position: relative;
+		@include col(1/3);
+		border-right: rem(10px) solid #f1f1ef;
+		flex-shrink: 0; // equal-height cols
+		transform: translate(0, 0);
+	}
+}
+.main {
+	box-shadow: inset 1px 0 1px  #bdc1be;
+	transition: transform 1s ease;
+	transform: translate(0, 0);
+
+	position: fixed;
+	top: 0; left: 0; right: 0; bottom: 0;
+	z-index: 1;
+	overflow: auto;
+
+	.sidebar.open ~ & {
+		transform: translate(100%, 0);
+	}
+
+	@include bp($md) {
+		position: relative;
+		@include col(2/3);
+		flex-grow: 1; // equal-height cols
+		overflow: hidden; // to hide triangle
+	}
+}
+
+.photo {
+	position: relative;
+	display: block;
+	width: rem(220px);
+	height: rem(220px);
+	border-radius: 50%;
+	margin: rem(35px) auto;
+	box-shadow: 0 0 0 rem(9px) $sidebar-bg, 0 0 0 rem(16px) #f1f1ef;
+	overflow: hidden;
+
+	@include bp($md) {
+		margin: rem(85px) auto rem(35px);
+	}
+
+	&_img {
+		position: absolute;
+		top: 0; left: 0; right: 0; bottom: 0;
+		display: block;
+		margin: auto;
+		max-width: 100%;
+	}
+}
+
+.name {
+	font-family: $delhi;
+	font-size: 2.8rem;
+	text-shadow: (em(-3px) / 2.8) (em(3px) / 2.8) #f1f1ef;
+	text-transform: uppercase;
+	margin-bottom: rem(15px);
+	text-align: center;
+	word-wrap: break-word;
+}
+
+.dots {
+	position: relative;
+	width: em(20px);
+	height: em(20px);
+	margin: 0 auto rem(20px);
+	border-radius: 50%;
+	background: $line-bg;
+	box-shadow: inset 0 em(2px) 0 darken($line-bg, 15%);
+	&:before, &:after {
+		content: '';
+		display: block;
+		position: absolute;
+		bottom: 0;
+		width: em(10px);
+		height: em(10px);
+		border-radius: 50%;
+		background: $line-bg;
+		box-shadow: inset 0 em(2px) 0 darken($line-bg, 15%);
+	}
+	&:before { left: 100%; transform: translate(em(7px), 0); }
+	&:after { right: 100%; transform: translate(em(-7px), 0); }
+}
+
+.about {
+	position: relative;
+	font-size: 1.42rem;
+	line-height: 1.4;
+	text-align: center;
+	padding-bottom: rem(20px);
+	margin-bottom: rem(30px);
+	&:before {
+		content: '';
+		display: block;
+		position: absolute;
+		width: 75%;
+		height: rem(1px);
+		top: 100%;
+		left: 50%;
+		transform: translate(-50%, 0);
+		background: $line-bg;
+	}
+}
+
+.interests {
+	&_title {
+		@extend .name;
+		font-size: 1.85rem;
+		margin-bottom: rem(30px);
+	}
+	&_list {
+		@extend %list-unstyle;
+		@extend %cf;
+	}
+}
+.interests_item {
+	margin-bottom: rem(10px);
+	text-align: center;
+
+	@include bp($sm) {
+		@include col(1/2, $cycle: 2);
+		text-align: left;
+	}
+
+	&_img {
+		display: inline-block;
+		vertical-align: middle;
+		width: 2.85em;
+		height: 2.85em;
+		background: #f2f2e6;
+		border-radius: 50%;
+		box-shadow: inset 0 em(2px) 0 #9D9D9D;
+		overflow: hidden;
+		& img {
+			display: block;
+			max-width: 100%;
+			margin: auto;
+		}
+	}
+	&_text {
+		display: inline-block;
+		vertical-align: middle;
+		font-size: 1.4rem;
+		width: calc(100% - 2.85rem);
+		padding: 0 rem(10px);
+		word-wrap: break-word;
+	}
+}
+
+.footer {
+	width: auto;
+	margin: 0 -1rem;
+	text-align: center;
+	padding: rem(40px) 1rem rem(10px);
+	background-color: #363636;
+	background-image:
+			linear-gradient(to bottom right, $sidebar-bg 50.5%, transparent 50.5%),
+			linear-gradient(to bottom left, $sidebar-bg 50.5%, transparent 50.5%);
+	background-repeat: repeat-x, repeat-x;
+	background-position: 0 0, rem(30px) 0;
+	background-size: rem(30px) rem(30px), rem(30px) rem(30px);
+
+	@include bp($md) {
+		position: absolute;
+		left: 0; bottom: 0;
+		width: 100%;
+		margin: 0;
+	}
+}
+.contacts {
+	font-size: 1.4rem;
+	line-height: 1.4;
+	color: #fff;
+}
+
+.general {
+	position: relative;
+	margin-top: rem(45px);
+	margin-bottom: rem(60px);
+	padding-left: 1rem;
+	padding-right: 1rem;
+
+	@include bp($sm) {
+		padding-left: rem(50px);
+		padding-right: rem(15px);
+		//triangle
+		&:before {
+			content: '';
+			display: block;
+			position: absolute;
+			top: 0; left: 0;
+			width: 0; height: 0;
+			border-style: solid;
+			border-width: rem(45px) rem(45px) 0 0;
+			border-color: #f2f2e6 #f2f2e6 transparent transparent;
+			transform: translate(-50%, -20%) rotate(45deg);
+			box-shadow: 0 rem(1px) rem(2px) 0 #4B4B4B;
+		}
+	}
+
+	@include bp($lg) {
+		padding-left: rem(120px);
+	}
+
+	&_title {
+		position: relative;
+		font-family: $delhi;
+		font-size: 1.85rem;
+		text-transform: uppercase;
+		padding-bottom: rem(10px);
+		border-bottom: rem(1px) solid $line-bg;
+		margin-bottom: rem(30px);
+		text-align: center;
+
+		@include bp($sm) {
+			text-align: left;
+		}
+	}
+	&_list {
+		@extend %cf;
+		margin-bottom: rem(20px);
+	}
+	&_term {
+		position: relative;
+		font-size: 1.4rem;
+		padding-right: rem(10px);
+		margin-bottom: rem(10px);
+		text-align: center;
+
+		@include bp($sm) {
+			text-align: left;
+		}
+
+		@include bp($md) {
+			float: left;
+			width: 23.5%;
+		}
+
+		&:after {
+			content: attr(data-dates);
+			display: inline-block;
+			text-indent: .5rem;
+
+			@include bp($md) {
+				display: block;
+				position: absolute;
+				top: 100%; left: 1em;
+				text-indent: 0;
+				font-size: 0.9rem;
+				color: #868383;
+			}
+		}
+	}
+	&_data {
+		font-size: 1.4rem;
+		margin-bottom: rem(10px);
+		text-align: center;
+
+		@include bp($sm) {
+			text-align: left;
+		}
+
+		@include bp($md) {
+			float: left;
+			width: 76.5%;
+		}
+	}
+}
+
+.media,
+.education,
+.experience,
+.skills {
+	@extend .general;
+
+	&_title{
+		@extend .general_title;
+	}
+	&_list{
+		@extend .general_list;
+	}
+	&_term{
+		@extend .general_term;
+	}
+	&_data{
+		@extend .general_data;
+	}
+}
+
+.media {
+	&:before {display: none;}
+	&_title {
+		text-align: center;
+	}
+	@include bp($md) {
+		display: none;
+	}
+}
+
+.skill-item {
+	margin-bottom: rem(30px);
+	text-align: center;
+
+	@include bp($sm) {
+		@include col(1/2, $cycle: 2);
+		text-align: left;
+	}
+	@include bp($md) {
+		@include col(1/3, $uncycle:2, $cycle: 3);
+	}
+}
+.skill-item_title {
+	font-size: 1.4rem;
+	margin-bottom: rem(15px);
+}
+
+//dots bg
+$bg0: #c6c6c6;
+$bg1:#c4e7d8;
+$bg2:#b9e7d3;
+$bg3:#ade6ce;
+$bg4:#a3e6ca;
+$bg5:#97e6c5;
+$bg6: #85e4bc;
+
+.skill-item_dots {
+	span {
+		//dots bg
+		display: inline-block;
+		width: em(20px);
+		height: em(20px);
+		margin-right: rem(10px);
+		border-radius: 50%;
+		background-color: $bg0;
+		box-shadow: inset 0 em(2px) 0 darken($bg0, 15%);
+	}
+}
+
+@for $i from 1 through 100 {
+	@if $i <= 16 {
+		$s: ($i/16)*100%;
+		[data-hint="#{$i+'%'}"] span:nth-child(1) {
+			background: linear-gradient(to right, $bg1 0%,$bg1 $s,$bg0 $s, $bg0 100%);
+		}
+	}
+	@else if $i >= 17 and $i <= 33 {
+		$s: (($i - 16) / 16)*100%;
+		[data-hint="#{$i+'%'}"] span:nth-child(1) {background: $bg1;}
+		[data-hint="#{$i+'%'}"] span:nth-child(2) {
+			background: linear-gradient(to right, $bg2 0%,$bg2 $s, $bg0 $s, $bg0 100%);
+		}
+	}
+	@else if $i >= 34 and $i <= 50 {
+		$s: (($i - 33) / 16)*100%;
+		[data-hint="#{$i+'%'}"] span:nth-child(1) {background: $bg1;}
+		[data-hint="#{$i+'%'}"] span:nth-child(2) {background: $bg2;}
+		[data-hint="#{$i+'%'}"] span:nth-child(3) {
+			background: linear-gradient(to right, $bg3 0%,$bg3 $s, $bg0 $s, $bg0 100%);
+		}
+	}
+	@else if $i >= 51 and $i <= 67 {
+		$s: (($i - 50) / 16)*100%;
+		[data-hint="#{$i+'%'}"] span:nth-child(1) {background: $bg1;}
+		[data-hint="#{$i+'%'}"] span:nth-child(2) {background: $bg2;}
+		[data-hint="#{$i+'%'}"] span:nth-child(3) {background: $bg3;}
+		[data-hint="#{$i+'%'}"] span:nth-child(4) {
+			background: linear-gradient(to right, $bg4 0%,$bg4 $s, $bg0 $s, $bg0 100%);
+		}
+	}
+	@else if $i >= 68 and $i <= 84 {
+		$s: (($i - 67) / 16)*100%;
+		[data-hint="#{$i+'%'}"] span:nth-child(1) {background: $bg1;}
+		[data-hint="#{$i+'%'}"] span:nth-child(2) {background: $bg2;}
+		[data-hint="#{$i+'%'}"] span:nth-child(3) {background: $bg3;}
+		[data-hint="#{$i+'%'}"] span:nth-child(4) {background: $bg4;}
+		[data-hint="#{$i+'%'}"] span:nth-child(5) {
+			background: linear-gradient(to right, $bg5 0%,$bg5 $s, $bg0 $s, $bg0 100%);
+		}
+	}
+	@else if $i >= 85 and $i <= 100 {
+		$s: (($i - 84) / 15)*100%;
+		[data-hint="#{$i+'%'}"] span:nth-child(1) {background: $bg1;}
+		[data-hint="#{$i+'%'}"] span:nth-child(2) {background: $bg2;}
+		[data-hint="#{$i+'%'}"] span:nth-child(3) {background: $bg3;}
+		[data-hint="#{$i+'%'}"] span:nth-child(4) {background: $bg4;}
+		[data-hint="#{$i+'%'}"] span:nth-child(5) {background: $bg5;}
+		[data-hint="#{$i+'%'}"] span:nth-child(6) {
+			background: linear-gradient(to right, $bg6 0%,$bg6 $s,$bg0 $s, $bg0 100%);
+		}
+	}
+}
+
